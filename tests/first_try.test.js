@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto(mainPageUrl);
 });
 
-test("elementsMainPage", async ({ page }) => {
+test("elements on main page", async ({ page }) => {
     const title = page.locator('.homepage-block-title');
     const destinationInput = page.getByPlaceholder('City, hotel or airport');
     const checkinInput = page.getByTestId('date-start-input');
@@ -23,7 +23,7 @@ test("elementsMainPage", async ({ page }) => {
     await expect(guests).toHaveText('2 guests');
 });
 
-test("elementsHeader", async ({ page }) => {
+test("elements in header", async ({ page }) => {
     const logo = page.getByTestId('header-logo-link');
     const language = page.getByTestId('language-widget-control');
     const languageItem = page.getByTestId('language-widget-item').first();
@@ -53,3 +53,21 @@ test("elementsHeader", async ({ page }) => {
     await expect(burgerMenu).toBeVisible();
     await expect(burgerMenu).toBeEnabled();
 });
+
+test("from main page to search page with chosen city", async ({ page }) => {
+    const destinationInput = page.getByPlaceholder('City, hotel or airport');
+    const destinationSelectList = page.locator('//*[contains (@class, "Popup-module__popup--")]').last();
+    const destinationListItem = page.locator('//*[contains (@class, "Suggest-module__region_active--")]');
+    const searchButton = page.getByTestId('search-button');
+
+    // контроль маленькими шагами, потому что автоселект по введенной строке не всегда срабатывает
+    await destinationInput.pressSequentially('Prague ');
+    await expect(destinationSelectList).toBeVisible();
+    await expect(destinationListItem).toHaveText('Prague, Czech Republic');
+    await destinationListItem.click();
+
+    await searchButton.click();
+
+    await expect(page.url()).toContain('https://ostrovok.ru/hotel/czech_republic/prague/');
+});
+
