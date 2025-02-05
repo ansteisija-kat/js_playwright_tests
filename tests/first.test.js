@@ -20,15 +20,16 @@ test("first_test", async ({ page }) => {
 
 
 test("my_try", async ({ page }) => {
-   await page.goto('https://stepik.org/catalog');
+    await page.goto('https://stepik.org/catalog');
+    const input_search = page.getByPlaceholder('Название курса, автор или предмет');
+    const searchButton = page.getByText('Искать')
 
-   const input_search = page.getByPlaceholder('Название курса, автор или предмет');
+    const searchName = "QA automation";
+    await input_search.fill(searchName);
+    await searchButton.click();
 
-   const searchName = "QA automation";
-   await input_search.fill(searchName);
-   await input_search.press("Enter");
-
-   const item = page.getByText('Уровень сложности');
-   await expect(item).toBeVisible();
+    await expect(page.locator('.catalog__search-results')).toBeVisible();
+    const item = page.getByText('Цена');
+    await expect(item).toBeVisible();
 });
 // тут в FF тест не проходит (проблема еще на первом этапе, страница прогружается долго)
