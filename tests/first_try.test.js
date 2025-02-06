@@ -13,7 +13,6 @@ test("elements on main page", async ({ page }) => {
     const checkinInput = page.getByTestId('date-start-input');
     const checkoutInput = page.getByTestId('date-end-input');
     const guests = page.getByTestId('guests-input'); // значение
-    const searchButton = page.getByTestId('search-button');
 
     await destinationInput.fill('Prague');
 
@@ -69,5 +68,16 @@ test("from main page to search page with chosen city", async ({ page }) => {
     await searchButton.click();
 
     await expect(page.url()).toContain('https://ostrovok.ru/hotel/czech_republic/prague/');
+});
+
+test("business option added to search page", async ({ page }) => {
+    const searchButton = page.getByTestId('search-button');
+    const businessOption = page.getByText('Business', { exact: true });
+
+    await businessOption.click();
+    await searchButton.dblclick();
+    // тк не заполняется destination, по первому клику вставляется дефолтное значение Moscow
+
+    await expect(page.url()).toContain('trip_type=business_trip');
 });
 
