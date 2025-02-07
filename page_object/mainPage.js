@@ -1,5 +1,5 @@
  import { expect } from '@playwright/test';
-//import { expect, Locator, Page } from '@playwright/test';
+
 
  const mainPageUrl = "https://ostrovok.ru/?lang=en"
 
