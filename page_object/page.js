@@ -1,7 +1,10 @@
  import { expect } from '@playwright/test';
 //import { expect, Locator, Page } from '@playwright/test';
 
-export class OstrovokMainPage {
+ const mainPageUrl = "https://ostrovok.ru/?lang=en"
+
+
+ export class OstrovokMainPage {
     // /**
     //  @param {import('@playwright/test').Page} page
     //  */
@@ -35,7 +38,7 @@ export class OstrovokMainPage {
     }
 
     async goto() {
-        await this.page.goto('https://ostrovok.ru/?lang=en');
+        await this.page.goto(mainPageUrl);
     }
 
     async fillDestinationEu() {
