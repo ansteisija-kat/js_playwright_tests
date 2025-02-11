@@ -44,7 +44,7 @@ test('bis option added to search page', async ({ page }) => {
 
     await expect(page.url()).toContain('https://ostrovok.ru/hotel/');
     await expect(page.url()).toContain('trip_type=business_trip');
-    await expect(SearchPage.title).toBeVisible();
+    await expect(SearchPage.header).toBeVisible();
 });
 // TODO нестабильный, иногда падает (не переходит на страницу поиска)
 
@@ -57,7 +57,7 @@ test("from main to search page with chosen city", async ({ page }) => {
     await MainPage.searchButton.click();
 
     await expect(page.url()).toContain('https://ostrovok.ru/hotel/czech_republic/prague/');
-    await expect(SearchPage.title).toBeVisible();
+    await expect(SearchPage.header).toBeVisible();
     await expect(SearchPage.destinationBlock).toBeVisible();
 });
 
