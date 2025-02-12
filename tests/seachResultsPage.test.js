@@ -95,8 +95,6 @@ test("check filter – free cancellation", async ({ page }) => {
     // TODO пока только на примере 1ой карточки, потом лучше сделать проверку для всех
 });
 
-// ввести в фильтрах полное название отеля и убедиться, что карточка только 1 (или 0?)
-
 test("check filter – hotel name – valid", async ({ page }) => {
     const SearchPage = new SERP(page);
     await SearchPage.goto(pageUrl);
@@ -181,5 +179,3 @@ test("check filter – meals", async ({ page }) => {
     await SearchPage.filterUnderTitleRemoveButton.click();
     // TODO пока только на примере 1ой карточки, потом лучше сделать проверку для всех
 });
-
-

@@ -32,7 +32,8 @@
 
         this.destinationInput = page.getByPlaceholder('City, hotel or airport');
         this.destinationSelectList = page.locator('//*[contains (@class, "Popup-module__popup--")]').last();
-        this.destinationListItem = page.locator('//*[contains (@class, "Suggest-module__region_active--")]');
+        this.destinationListItemRegion = page.locator('//*[contains (@class, "Suggest-module__region_active--")]');
+        this.destinationListItemHotels = page.locator('//*[contains (@class, "Suggest-module__hotel_active--")]');
         this.searchButton = page.getByTestId('search-button');
         this.businessOption = page.getByText('Business', { exact: true });
     }
@@ -45,9 +46,17 @@
         // контроль маленькими шагами, потому что автоселект по введенной строке не всегда срабатывает
         await this.destinationInput.pressSequentially('Prague ');
         await expect(this.destinationSelectList).toBeVisible();
-        await expect(this.destinationListItem).toHaveText('Prague, Czech Republic');
-        await this.destinationListItem.click();
+        await expect(this.destinationListItemRegion).toHaveText('Prague, Czech Republic');
+        await this.destinationListItemRegion.click();
     }
+
+     async fillDestinationHotel() {
+         // контроль маленькими шагами, потому что автоселект по введенной строке не всегда срабатывает
+         await this.destinationInput.pressSequentially('Abc Apartments Apart Hotel ');
+         await expect(this.destinationSelectList).toBeVisible();
+         await expect(this.destinationListItemHotels).toContainText('Abc Apartments Apart Hotel');
+         await this.destinationListItemHotels.click();
+     }
 
     async toSearchPageWithDefaultDestination() {
         // тк не заполняется destination вручную, по первому клику вставляется дефолтное значение Moscow, Russia

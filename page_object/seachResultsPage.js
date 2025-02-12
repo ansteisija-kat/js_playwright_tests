@@ -55,16 +55,10 @@ export class SERP {
         this.hotelCardRate = page.locator('a.zen-hotelcard-rating-total').first(); // тут можно вытащить текстом саму цифру
         this.hotelCardAmenitiesIcon = page.locator('.zen-hotelcard-content-amenities-list').first();
         this.hotelCardValueAddsList = page.locator('.valueadds-short').first(); // в теории можно вытащить дочерние li эл-ты плюшек
-
-
     }
 
     async goto(url) {
         await this.page.goto(url);
     }
-
-    // async getDatesFromDestinationBlock() {
-    //     return this.destinationBlockDates.innerText()
-    // }
 
 }
