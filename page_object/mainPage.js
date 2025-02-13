@@ -19,10 +19,14 @@
         this.checkoutInput = page.getByTestId('date-end-input');
         this.guests = page.getByTestId('guests-input'); // значение
 
+        // header
         this.logo = page.getByTestId('header-logo-link');
+        this.widgets = page.locator('//*[contains(@class, "Widgets_widgets__")]');
         this.language = page.getByTestId('language-widget-control');
         this.languageItem = page.getByTestId('language-widget-item').first();
-        this.currency = page.locator('//*[contains (@class, "CurrencyWidget-module__control--")]');
+        this.currency = page.locator('//*[contains (@class, "CurrencyWidget_control__")]');
+        this.currencyWidget = page.locator('//*[contains (@class, "CurrencyWidget_select__")]');
+        this.currencyEuro = page.getByRole('button', { name: 'EUR Euro , €' }).first();
         this.askSupport = page.locator('//*[contains (@class, "SupportWidget-module__control--")]');
         this.feedbackButton = page.getByText('Feedback form');
         this.loginButton = page.locator('//*[contains (@class, "Control-module__control--")]');
