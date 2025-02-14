@@ -44,7 +44,8 @@ test("click on tab remove filters and get new results list", async ({ page }) =>
     await SearchPage.fav.click();
     await expect(SearchPage.emptyResults).toBeVisible();
 
-    await SearchPage.tabHotels.click();
+    //await SearchPage.tabHotels.click();
+    await SearchPage.activeTabChangeTo(hotels);
     await expect(SearchPage.emptyResults).not.toBeVisible();
     await expect(SearchPage.header).toContainText('Moscow');
     await expect(SearchPage.tabHotels).toHaveClass(SearchPage.activeTab);

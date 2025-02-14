@@ -61,4 +61,10 @@ export class SERP {
         await this.page.goto(url);
     }
 
+    async activeTabChangeTo(tab: { all, hotels, aparts }) {
+        tab.all = this.tabAll;
+        tab.hotels = this.tabHotels;
+        tab.aparts = this.tabAparts;
+        await tab.click();
+    }
 }
