@@ -18,23 +18,6 @@
         this.checkinInput = page.getByTestId('date-start-input');
         this.checkoutInput = page.getByTestId('date-end-input');
         this.guests = page.getByTestId('guests-input'); // значение
-
-        // header
-        this.logo = page.getByTestId('header-logo-link');
-        this.widgets = page.locator('//*[contains(@class, "Widgets_widgets__")]');
-        this.language = page.getByTestId('language-widget-control');
-        this.languageItem = page.getByTestId('language-widget-item').first();
-        this.currency = page.locator('//*[contains (@class, "CurrencyWidget_control__")]');
-        this.currencyWidget = page.locator('//*[contains (@class, "CurrencyWidget_select__")]');
-        this.currencyEuro = page.getByRole('button', { name: 'EUR Euro , €' }).first();
-        this.askSupport = page.locator('//*[contains (@class, "SupportWidget-module__control--")]');
-        this.feedbackButton = page.getByText('Feedback form');
-        this.loginButton = page.locator('//*[contains (@class, "Control-module__control--")]');
-        this.loginInput = page.getByTestId('user-widget-sign-in-email-input');
-        this.burgerButton = page.getByTestId('menu-widget-control');
-        this.burgerMenu = page.locator('//*[contains (@class, "MenuWidget-module__content--")]');
-
-        this.destinationInput = page.getByPlaceholder('City, hotel or airport');
         this.destinationSelectList = page.locator('//*[contains (@class, "Popup-module__popup--")]').last();
         this.destinationListItemRegion = page.locator('//*[contains (@class, "Suggest-module__region_active--")]');
         this.destinationListItemHotels = page.locator('//*[contains (@class, "Suggest-module__hotel_active--")]');
@@ -67,14 +50,10 @@
         await this.searchButton.dblclick();
     }
 
-    async headerSupportOpenPopupWithButton() {
-        await this.askSupport.click();
-        await expect(this.feedbackButton).toBeEnabled();
-    }
-
-    async headerBurgerOpenList() {
-        await this.burgerButton.click();
-        await expect(this.burgerMenu).toBeEnabled();
-    }
+     async toHotelPage() {
+         await this.goto();
+         await this.fillDestinationHotel();
+         await this.searchButton.click();
+     }
 
 }

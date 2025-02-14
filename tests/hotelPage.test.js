@@ -1,33 +1,22 @@
 import { test, expect } from '@playwright/test';
 import { HotelPage } from "../page_object/hotelPage.js";
-import { OstrovokMainPage } from "../page_object/mainPage.js";
+import { Header } from "../page_object/header.js";
 
-let mainPageUrl = 'https://ostrovok.ru/?lang=en';
+
+
+test.beforeEach(async ({ page }) => {
+    const HP = new HotelPage(page);
+    await HP.fromMainPage(page);
+});
 
 test("from main to hotel page with chosen hotel", async ({ page }) => {
-    const MainPage = new OstrovokMainPage(page);
     const HP = new HotelPage(page);
 
-    await MainPage.goto(mainPageUrl);
-    await MainPage.fillDestinationHotel();
-    await MainPage.searchButton.click();
-
-    await expect(page.url()).toContain('https://ostrovok.ru/hotel/russia/moscow/');
-    await expect(page.url()).toContain('/abc_apartments_apart_hotel/');
-    await expect(HP.hotelHeader).toBeVisible();
     await expect(HP.hotelHeaderName).toHaveText('Abc Apartments Apart Hotel');
 });
 
 test("booking form fields", async ({ page }) => {
-    const MainPage = new OstrovokMainPage(page);
     const HP = new HotelPage(page);
-    await MainPage.goto(mainPageUrl);
-    await MainPage.fillDestinationHotel();
-    await MainPage.searchButton.click();
-    await expect(page.url()).toContain('https://ostrovok.ru/hotel/russia/moscow/');
-    await expect(page.url()).toContain('/abc_apartments_apart_hotel/');
-    await expect(HP.hotelHeader).toBeVisible();
-    // это все будет предусловием
 
     await expect(HP.sideBookingForm).toBeVisible();
 
@@ -55,15 +44,7 @@ test("booking form fields", async ({ page }) => {
 // переход на букинг страницу из не-1го рейта
 
 test("other amenities scroll", async ({ page }) => {
-    const MainPage = new OstrovokMainPage(page);
     const HP = new HotelPage(page);
-    await MainPage.goto(mainPageUrl);
-    await MainPage.fillDestinationHotel();
-    await MainPage.searchButton.click();
-    await expect(page.url()).toContain('https://ostrovok.ru/hotel/russia/moscow/');
-    await expect(page.url()).toContain('/abc_apartments_apart_hotel/');
-    await expect(HP.hotelHeader).toBeVisible();
-    // это все будет предусловием
 
     await expect(HP.sideBookingForm).toBeVisible();
     await HP.hotelAmenitiesLinktoList.click();
@@ -72,23 +53,16 @@ test("other amenities scroll", async ({ page }) => {
 });
 
 test("changing currency in header changes it everywhere at hotel page", async ({ page }) => {
-    const MainPage = new OstrovokMainPage(page);
     const HP = new HotelPage(page);
-    await MainPage.goto(mainPageUrl);
-    await MainPage.fillDestinationHotel();
-    await MainPage.searchButton.click();
-    await expect(page.url()).toContain('https://ostrovok.ru/hotel/russia/moscow/');
-    await expect(page.url()).toContain('/abc_apartments_apart_hotel/');
-    await expect(HP.hotelHeader).toBeVisible();
-    // это все будет предусловием
+    const HeaderElems = new Header(page);
 
     // меняем валюту в хэдере
-    await expect(MainPage.widgets).toBeVisible({ timeout: 10_000 });
-    await expect(MainPage.currency).toBeEnabled();
-    await MainPage.currency.click();
-    await MainPage.currencyEuro.click();
+    await expect(HeaderElems.widgets).toBeVisible({ timeout: 10_000 });
+    await expect(HeaderElems.currencyOtherPage).toBeEnabled();
+    await HeaderElems.currencyOtherPage.click();
+    await HeaderElems.currencyEuro.click();
 
-    await expect(MainPage.currencyWidget).not.toBeVisible();
+    await expect(HeaderElems.currencyWidget).not.toBeVisible();
     await expect(HP.hotelHeaderPrice).toContainText('€');
     await expect(HP.bookingFormPrice).toContainText('€');
     await expect(HP.ratePrice).toContainText('€');
@@ -96,7 +70,6 @@ test("changing currency in header changes it everywhere at hotel page", async ({
 
 
 // TODO оптимизации:
-// вынести хэдер в отдельный пейдж обжект
 // сделать beforeEach
 // сделать для серпа еще aftereach (про тесты с фильтрами)
 // вынести повторяющийся код в методы пейдж обжекта

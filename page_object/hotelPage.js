@@ -1,10 +1,8 @@
+import { expect } from "@playwright/test";
+import { OstrovokMainPage } from "./mainPage.js";
 
 
 export class HotelPage {
-    // /**
-    //  @param {import('@playwright/test').Page} page
-    //  */
-    // без этого заработало, с этим импорт не работает ??
 
     constructor(page) {
         this.page = page;
@@ -33,13 +31,18 @@ export class HotelPage {
         this.popupSearchFormGuestsEditFormValue = page.locator('//*[contains(@class, "Counter_value__")]');
         this.popupSearchFormGuestsEditFormDoneButton = page.locator('//*[contains(@class, "Form_button__")]');
 
-
-
-
-
     }
 
     async goto(url) {
         await this.page.goto(url);
+    }
+
+    async fromMainPage(page) {
+        // на мейн пейдже само действие перехода, тут – ожидания и дефолтная проверка урла
+        const MainPage = new OstrovokMainPage(page);
+        await MainPage.toHotelPage();
+        await expect(page.url()).toContain('https://ostrovok.ru/hotel/russia/moscow/');
+        await expect(page.url()).toContain('/abc_apartments_apart_hotel/');
+        await expect(this.hotelHeader).toBeVisible();
     }
 }
