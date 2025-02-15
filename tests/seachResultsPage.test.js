@@ -38,17 +38,19 @@ test("empty results list if favourites active", async ({ page }) => {
     await expect(SearchPage.emptyResultsFilterRemoveButton).toBeEnabled();
 });
 
-test("click on tab remove filters and get new results list", async ({ page }) => {
-    const SearchPage = new SERP(page);
+[
+    { tab: 'hotels', expectedTab: 'tabHotels' },
+    { tab: 'aparts', expectedTab: 'tabAparts' },
+    { tab: 'all', expectedTab: 'tabAll' },
+].forEach(({ tab, expectedTab }) => {
+    test(`tab ${tab} – filters for hotels and aparts`, async ({ page }) => {
+        const SearchPage = new SERP(page);
 
-    await SearchPage.fav.click();
-    await expect(SearchPage.emptyResults).toBeVisible();
-
-    //await SearchPage.tabHotels.click();
-    await SearchPage.activeTabChangeTo(hotels);
-    await expect(SearchPage.emptyResults).not.toBeVisible();
-    await expect(SearchPage.header).toContainText('Moscow');
-    await expect(SearchPage.tabHotels).toHaveClass(SearchPage.activeTab);
+        await SearchPage.activeTabChangeTo(tab);
+        await expect(SearchPage.emptyResults).not.toBeVisible();
+        await expect(SearchPage.header).toContainText('Moscow');
+        await expect(SearchPage[expectedTab]).toHaveClass(SearchPage.activeTab);
+    });
 });
 
 test("important elements are exist on result card", async ({ page }) => {
