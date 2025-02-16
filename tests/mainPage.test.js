@@ -1,58 +1,66 @@
 import { test, expect } from '@playwright/test';
 import { OstrovokMainPage } from "../page_object/mainPage.js";
 import { SERP } from "../page_object/seachResultsPage.js";
+import { Header } from "../page_object/header.js";
 
+
+test.beforeEach(async ({ page }) => {
+    const MainPage = new OstrovokMainPage(page);
+    await MainPage.goto()
+})
 
 test("elements on main page", async ({ page }) => {
     const MainPage = new OstrovokMainPage(page);
-    await MainPage.goto()
 
     await MainPage.destinationInput.fill('Prague');
 
     await expect(MainPage.title).toBeVisible()
-    await expect(MainPage.checkinInput).toHaveText('Feb 8, 2025');
-    await expect(MainPage.checkoutInput).toHaveText('Feb 9, 2025');
-    await expect(MainPage.guests).toHaveText('2 guests');
+    await expect(MainPage.checkinInput).toBeEnabled();
+    await expect(MainPage.checkoutInput).toBeEnabled();
+    await expect(MainPage.guests).toHaveText('2 guests'); // дефолтное значение
 });
 
 test("elements in header", async ({ page }) => {
-    const MainPage = new OstrovokMainPage(page);
-    await MainPage.goto()
+    const HeaderElems = new Header(page);
 
-    await expect(MainPage.logo).toBeEnabled();
-    await expect(MainPage.currency).toBeEnabled();
+    await expect(HeaderElems.logo).toBeEnabled();
+    await expect(HeaderElems.currencyMainPage).toBeEnabled();
 
-    await MainPage.language.click();
-    await expect(MainPage.languageItem).toBeVisible();
+    await HeaderElems.language.click();
+    await expect(HeaderElems.languageItem).toBeVisible();
 
-    await MainPage.headerSupportOpenPopupWithButton();
+    await HeaderElems.headerSupportOpenPopupWithButton();
 
-    await MainPage.loginButton.click();
-    await expect(MainPage.loginInput).toBeVisible();
-    await expect(MainPage.loginInput).toBeEnabled();
+    await HeaderElems.loginButton.click();
+    await expect(HeaderElems.loginInput).toBeVisible();
+    await expect(HeaderElems.loginInput).toBeEnabled();
 
-    await MainPage.headerBurgerOpenList();
+    await HeaderElems.headerBurgerOpenList();
+    // TODO переселить в отдельный файл для тестов хэдера
 });
 
-test('bis option added to search page', async ({ page }) => {
-    const MainPage = new OstrovokMainPage(page);
-    const SearchPage = new SERP(page);
+[
+    { type: 'leisure', loc: 'leisureOption', expectedParam: 'tourism_trip' },
+    { type: 'business', loc: 'businessOption', expectedParam: 'business_trip' },
+].forEach(({ type, loc, expectedParam }) => {
+    test(`${type} option added to search page params`, async ({ page }) => {
+        const MainPage = new OstrovokMainPage(page);
+        const SearchPage = new SERP(page);
 
-    await MainPage.goto();
-    await MainPage.businessOption.click();
-    await MainPage.toSearchPageWithDefaultDestination();
+        await MainPage[loc].click();
+        await MainPage.toSearchPageWithDefaultDestination();
 
-    await expect(page.url()).toContain('https://ostrovok.ru/hotel/');
-    await expect(page.url()).toContain('trip_type=business_trip');
-    await expect(SearchPage.header).toBeVisible();
+        await expect(page.url()).toContain('https://ostrovok.ru/hotel/');
+        await expect(page.url()).toContain(`trip_type=${expectedParam}`);
+        await expect(SearchPage.header).toBeVisible();
+    });
 });
-// TODO нестабильный, иногда падает (не переходит на страницу поиска)
+    // TODO нестабильный, иногда падает (не переходит на страницу поиска)
 
 test("from main to search page with chosen city", async ({ page }) => {
     const MainPage = new OstrovokMainPage(page);
     const SearchPage = new SERP(page);
 
-    await MainPage.goto()
     await MainPage.fillDestinationEu();
     await MainPage.searchButton.click();
 

@@ -1,10 +1,6 @@
 
 
 export class SERP {
-    // /**
-    //  @param {import('@playwright/test').Page} page
-    //  */
-    // без этого заработало, с этим импорт не работает ??
 
     activeTab = /Tabs__tab_active--/  // вспомогательный класс, не бывает единственным
 
@@ -13,8 +9,7 @@ export class SERP {
 
         this.destinationBlock = page.locator('.zenregioninfo').first();
         this.destinationBlockCity = page.locator('p.zenregioninfo-region').first();
-        this.destinationBlockDates = page.locator('p.zenregioninfo-dates').first();
-        // this.destinationBlockDatesText = (page.locator('p.zenregioninfo-dates').first()).innerText();
+        this.destinationBlockDates = page.locator('.zenregioninfo-dates').first();
         this.destinationBlockGuestRooms = page.locator('p.zenregioninfo-rooms').first();
         this.destinationBlockEditIcon = page.locator('.zenregioninfo-lens').first(); // лупа
 
@@ -38,7 +33,6 @@ export class SERP {
         // leftbar
         this.fav = page.locator('.zen-hotels-filter-favorites');
         this.paymentTypes = page.locator('zen-hotels-filter-paymenttypes'); // весь контейнер
-        // this.paymentTypeFreeCancel = page.locator('.zencheckbox #freecancellation'); // один из вариантов
         this.paymentTypesFreeCancel = page.locator('.zen-filter-checkbox-field').filter({ hasText: 'Free cancellation available' }); // по id не тыкалось, рабочий вариант такой
         this.hotelName = page.locator('.zen-hotels-filter-hotelname'); // весь контейнер
         this.hotelNameFilter = page.getByPlaceholder('For example, Hilton'); // инпут
@@ -55,16 +49,18 @@ export class SERP {
         this.hotelCardRate = page.locator('a.zen-hotelcard-rating-total').first(); // тут можно вытащить текстом саму цифру
         this.hotelCardAmenitiesIcon = page.locator('.zen-hotelcard-content-amenities-list').first();
         this.hotelCardValueAddsList = page.locator('.valueadds-short').first(); // в теории можно вытащить дочерние li эл-ты плюшек
-
-
     }
 
     async goto(url) {
         await this.page.goto(url);
     }
 
-    // async getDatesFromDestinationBlock() {
-    //     return this.destinationBlockDates.innerText()
-    // }
-
+    async activeTabChangeTo(tab) {
+        const tabs = {
+            all: this.tabAll,
+            hotels: this.tabHotels,
+            aparts: this.tabAparts
+        };
+        await tabs[tab].click();
+    }
 }
