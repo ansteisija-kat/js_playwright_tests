@@ -15,7 +15,6 @@ export class HotelPage {
         this.hotelAmenitiesLinktoList = page.locator('//*[contains (@class, "Perks_link__")]').first();
         this.hotelAmenitiesFullList = page.locator('//*[contains (@class, "Amenities_amenities__")]').last(); // весь контейнер
         this.ratePrice = page.locator('//*[contains(@class, "Rates_cell_price__")] //*[contains (@class, "Price_priceAmount__")]').first(); // пока только 1ый рейт
-        // TODO сделать отдельные локаторы для всех рейтов или найти способ проверять одинаковые элементы
         this.sideBookingForm = page.locator('//*[contains (@class, "ApartSidebar_container__")]'); // весь контейнер
         this.bookingOptions = page.locator('//*[contains (@class, "HotelSearchResult_root__")]'); // весь контейнер
         this.bookingOptionsTitle = page.locator('//*[contains (@class, "CardTitle_cardTitle__")]');
@@ -41,8 +40,10 @@ export class HotelPage {
         // на мейн пейдже само действие перехода, тут – ожидания и дефолтная проверка урла
         const MainPage = new OstrovokMainPage(page);
         await MainPage.toHotelPage();
+
         await expect(page.url()).toContain('https://ostrovok.ru/hotel/russia/moscow/');
         await expect(page.url()).toContain('/abc_apartments_apart_hotel/');
         await expect(this.hotelHeader).toBeVisible();
     }
+
 }

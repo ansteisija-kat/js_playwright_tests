@@ -17,11 +17,13 @@
         this.destinationInput = page.getByPlaceholder('City, hotel or airport');
         this.checkinInput = page.getByTestId('date-start-input');
         this.checkoutInput = page.getByTestId('date-end-input');
+        this.dateInputs = page.locator('//*[contains (@class, "Datepicker-module__group--")]');
         this.guests = page.getByTestId('guests-input'); // значение
         this.destinationSelectList = page.locator('//*[contains (@class, "Popup-module__popup--")]').last();
         this.destinationListItemRegion = page.locator('//*[contains (@class, "Suggest-module__region_active--")]');
         this.destinationListItemHotels = page.locator('//*[contains (@class, "Suggest-module__hotel_active--")]');
         this.searchButton = page.getByTestId('search-button');
+        this.leisureOption = page.getByText('Leisure', { exact: true });
         this.businessOption = page.getByText('Business', { exact: true });
     }
 
@@ -54,6 +56,16 @@
          await this.goto();
          await this.fillDestinationHotel();
          await this.searchButton.click();
+     }
+
+     async getBothDates() {
+        await this.goto();
+
+        const textFirst = await this.checkinInput.innerText();
+        const textSecond = await this.checkoutInput.innerText();
+        this.dates = [ textFirst, textSecond ];
+
+        return this.dates;
      }
 
 }

@@ -3,7 +3,6 @@ import { HotelPage } from "../page_object/hotelPage.js";
 import { Header } from "../page_object/header.js";
 
 
-
 test.beforeEach(async ({ page }) => {
     const HP = new HotelPage(page);
     await HP.fromMainPage(page);
@@ -17,7 +16,6 @@ test("from main to hotel page with chosen hotel", async ({ page }) => {
 
 test("booking form fields", async ({ page }) => {
     const HP = new HotelPage(page);
-
     await expect(HP.sideBookingForm).toBeVisible();
 
     await expect(HP.bookingFormGuests).toHaveText('2 guests');
@@ -37,11 +35,6 @@ test("booking form fields", async ({ page }) => {
     await expect(HP.bookingFormGuests).toHaveText('3 guests');
     await expect(page.url()).toContain('guests=3');
 });
-
-// TODO тесты:
-// изменение данных в букинг форме + проверка на букинг пейдже, что данные те же
-// переход на букинг страницу из 1го рейта
-// переход на букинг страницу из не-1го рейта
 
 test("other amenities scroll", async ({ page }) => {
     const HP = new HotelPage(page);
@@ -67,9 +60,3 @@ test("changing currency in header changes it everywhere at hotel page", async ({
     await expect(HP.bookingFormPrice).toContainText('€');
     await expect(HP.ratePrice).toContainText('€');
 });
-
-
-// TODO оптимизации:
-// сделать beforeEach
-// сделать для серпа еще aftereach (про тесты с фильтрами)
-// вынести повторяющийся код в методы пейдж обжекта
