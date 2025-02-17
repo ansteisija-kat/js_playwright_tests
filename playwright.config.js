@@ -38,12 +38,14 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testMatch: /e2e/
     },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-    } //,
+      testMatch: /e2e/
+    }, //,
 
     // {
     //   name: 'webkit',
@@ -69,6 +71,10 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
+    {
+      name: 'API Tests',
+      testMatch: /api/,
+    },
   ],
 
   /* Run your local dev server before starting the tests */

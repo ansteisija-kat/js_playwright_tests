@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { HotelPage } from "../page_object/hotelPage.js";
-import { Header } from "../page_object/header.js";
+import { HotelPage } from "../../page_object/hotelPage.js";
+import { Header } from "../../page_object/header.js";
 
 
 test.beforeEach(async ({ page }) => {
