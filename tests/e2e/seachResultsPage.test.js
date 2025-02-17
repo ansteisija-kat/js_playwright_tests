@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { SERP } from "../page_object/seachResultsPage.js";
-import { OstrovokMainPage } from "../page_object/mainPage.js";
+import { SERP } from "../../page_object/seachResultsPage.js";
+import { OstrovokMainPage } from "../../page_object/mainPage.js";
 
 
 test.beforeEach(async ({ page }) => {

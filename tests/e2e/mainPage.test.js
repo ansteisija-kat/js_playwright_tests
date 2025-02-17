@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { OstrovokMainPage } from "../page_object/mainPage.js";
-import { SERP } from "../page_object/seachResultsPage.js";
-import { Header } from "../page_object/header.js";
+import { OstrovokMainPage } from "../../page_object/mainPage.js";
+import { SERP } from "../../page_object/seachResultsPage.js";
+import { Header } from "../../page_object/header.js";
 
 
 test.beforeEach(async ({ page }) => {
