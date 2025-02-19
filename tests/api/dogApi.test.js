@@ -22,7 +22,7 @@ test(`get a random image of doggo`, async ({ request }) => {
     { breed: 'african' },
     { breed: 'ovcharka' },
     { breed: 'pug' },
-].forEach(({ breed}) => {
+].forEach(({ breed }) => {
     test(`get a 1 random image of ${breed} by breed`, async ({ request }) => {
         const breed = 'african'
 
@@ -107,7 +107,7 @@ test(`get a random image of doggo`, async ({ request }) => {
     { breed: 'dalmatian' },
     { breed: 'mastiff' },
     { breed: 'bulldog' },
-].forEach(({ breed}) => {
+].forEach(({ breed }) => {
     test(`get all images of ${breed}s by breed`, async ({ request }) => {
         const response = await request.get(`${BASE_URL}/breed/${breed}/images/`);
         const responseData = await response.json();
