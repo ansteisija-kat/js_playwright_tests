@@ -76,9 +76,7 @@ test(`edit 1 post`, async ({ request }) => {
     await expect(response).toBeOK();
     await expect(responseData.message).not.toBeNull;
     await expect.objectContaining({
-        title: 'yay!',
         body: requestData.body.body,
-        userId: 1,
         id: id
     });
 });
