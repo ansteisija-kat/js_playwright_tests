@@ -21,31 +21,31 @@ export const MAX_IMAGES = [
     { breed: 'bulldog', imagesMaxCount: 10 },
 ];
 
-export function getRandomBreed(BREEDS) {
-    const randomIndex = Math.floor(Math.random() * BREEDS.length);
-    const breed = BREEDS[randomIndex];
+export function getRandomBreed(b= BREEDS) {
+    const randomIndex = Math.floor(Math.random() * b.length);
+    const breed = b[randomIndex];
     return breed;
 }
 
-export const randomBreed = getRandomBreed(BREEDS);
+export const randomBreed = getRandomBreed();
 
-export function getRandomBreedForSubbreed(SUBBREEDS) {
-    const randomIndex = Math.floor(Math.random() * SUBBREEDS.length);
-    const breed = SUBBREEDS[randomIndex];
+export function getRandomBreedForSubbreed(subb = SUBBREEDS) {
+    const randomIndex = Math.floor(Math.random() * subb.length);
+    const breed = subb[randomIndex];
     return breed
     // внутри хранится 1 объект из SUBBREEDS: breed и соотв. список subBreed
 }
 
-export const randomBreedForSubbreed = getRandomBreedForSubbreed(SUBBREEDS);
+export const randomBreedForSubbreed = getRandomBreedForSubbreed();
 
-export function getRandomBreedForImageCount(MAX_IMAGES) {
-    const randomIndex = Math.floor(Math.random() * MAX_IMAGES.length);
-    const breedImages = MAX_IMAGES[randomIndex];
+export function getRandomBreedForImageCount(i = MAX_IMAGES) {
+    const randomIndex = Math.floor(Math.random() * i.length);
+    const breedImages = i[randomIndex];
     return breedImages
     // внутри хранится 1 объект из MAX_IMAGES: breed и соотв. imagesCount
 }
 
-export const randomBreedImageCount = getRandomBreedForImageCount(MAX_IMAGES);
+export const randomBreedImageCount = getRandomBreedForImageCount();
 
 
 // paths
