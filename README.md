@@ -1,5 +1,6 @@
 <h2>Здесь лежат тесты :) </h2>
 <br>
+
 Использовались:
 - Playwright v1.51
 - JavaScript v23.6
@@ -13,7 +14,7 @@ UI тесты
 
 API тесты
    - лежат тут: `/tests/api`
-   - методы тут: `/api_data`
+   - методы тут: `/api_data/`
    - на примере сайтов [dog.ceo/api](https://dog.ceo/dog-api/) и [jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com)
 
 <br>
