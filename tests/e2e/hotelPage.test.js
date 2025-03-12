@@ -6,12 +6,13 @@ import { Header } from "../../page_object/header.js";
 test.beforeEach(async ({ page }) => {
     const HP = new HotelPage(page);
     await HP.fromMainPage(page);
+    //await expect(HP.hotelHeaderName).toBeVisible({ timeout: 10_000 });
 });
 
 test("from main to hotel page with chosen hotel", async ({ page }) => {
     const HP = new HotelPage(page);
 
-    await expect(HP.hotelHeaderName).toHaveText('Abc Apartments Apart Hotel');
+    await expect(HP.hotelHeaderName).toHaveText('ABC Apartments');
 });
 
 test("booking form fields", async ({ page }) => {

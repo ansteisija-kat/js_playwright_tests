@@ -17,7 +17,7 @@ test(`get a random image of doggo`, async ({ request }) => {
 });
 
 
-test(`get a 1 random image of breed`, async ({ request }) => {
+test(`get 1 random image of breed`, async ({ request }) => {
     const response = await request.get(dogData.pathGetOneImageByBreed);
     const responseData = await response.json();
     await expect(response).toBeOK();
@@ -96,4 +96,4 @@ test(`get all images by breed`, async ({ request }) => {
             status: 'success',
         }),
     );
-});
+})

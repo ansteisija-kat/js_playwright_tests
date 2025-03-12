@@ -10,6 +10,7 @@ export class HotelPage {
         this.hotelHeader = page.locator('//*[contains (@class, "HotelHeader_header__")]'); // весь контейнер
         this.hotelHeaderName = page.locator('//*[contains (@class, "HotelHeader_name__")]');
         this.hotelHeaderPrice = page.locator('//*[contains (@class, "HotelHeader_priceTitle__")]');
+        this.hotelHeaderPriceButton = page.locator('//*[contains (@class, "Price_priceButton__")]');
         this.hotelAmenitiesTitle = page.locator('//*[contains (@class, "Perks_title__")]'); // тайтл
         this.hotelAmenities = page.locator('//*[contains (@class, "Perks_amenities__")]'); // весь список
         this.hotelAmenitiesLinktoList = page.locator('//*[contains (@class, "Perks_link__")]').first();
@@ -44,6 +45,9 @@ export class HotelPage {
         await expect(page.url()).toContain('https://ostrovok.ru/hotel/russia/moscow/');
         await expect(page.url()).toContain('/abc_apartments_apart_hotel/');
         await expect(this.hotelHeader).toBeVisible();
+        await expect(this.hotelHeaderName).toBeVisible();
+        // await expect(this.hotelHeaderPriceButton).toBeEnabled();
+
     }
 
 }

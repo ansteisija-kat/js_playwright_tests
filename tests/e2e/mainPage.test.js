@@ -68,4 +68,3 @@ test("from main to search page with chosen city", async ({ page }) => {
     await expect(SearchPage.header).toBeVisible();
     await expect(SearchPage.destinationBlock).toBeVisible();
 });
-
